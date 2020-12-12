@@ -43,19 +43,7 @@ class DetailDocumentSerializer(DocumentSerializer):
 class GenerateDocumentSerializer(DetailDocumentSerializer):
     class Meta(DetailDocumentSerializer.Meta):
         model = DetailDocumentSerializer.Meta.model
-        fields = (
-            'number',
-            'sign_date',
-            'sign_status',
-            'uri'
-        )
-
-
-class SignDocumentSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Document
-        fields = []
+        fields = ()
 
     def update(self, instance: Document, validated_data):
         if not instance.sign_status:
@@ -63,3 +51,17 @@ class SignDocumentSerializer(serializers.ModelSerializer):
             instance.sign_date = now()
             instance.save()
         return instance
+
+
+# class SignDocumentSerializer(serializers.ModelSerializer):
+#
+#     class Meta:
+#         model = Document
+#         fields = []
+#
+#     def update(self, instance: Document, validated_data):
+#         if not instance.sign_status:
+#             instance.sign_status = True
+#             instance.sign_date = now()
+#             instance.save()
+#         return instance
